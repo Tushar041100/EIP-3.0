@@ -11,3 +11,6 @@ Inkers External Internship Programme 3.0 by Nvidia and Nasscom
 |21 Mar 6:30| 5-OpenCV + test | OpenCV Basics, Project and Qualification Test |
 |28 Mar 6:30| Submission deadline | Project Deadline |
 |2 Apr 9:00|Results Declared|Phase 2 Schedule|
+  
+### Assignments
+- Assignment 1A [(Colab Notebook link)](https://bit.ly/2Xkf4LL)
