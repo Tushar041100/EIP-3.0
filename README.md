@@ -13,4 +13,6 @@ Inkers External Internship Programme 3.0 by Nvidia and Nasscom
 |2 Apr 9:00|Results Declared|Phase 2 Schedule|
   
 ### Assignments
-- Assignment 1A [(Colab Notebook link)](https://bit.ly/2Xkf4LL)
+- Assignment 1A (Without Dense Layer)  [(Colab Notebook link)](https://colab.research.google.com/drive/1fx1e95ifm7n6IXnhDsiIcRqA_zKcLzZY)
+- Assignment 1A (With Dense Layer) [(Colab Notebook link)](https://colab.research.google.com/drive/1rZXZcClizIXXzNMPaXpqM5Z27CyWqoeL)
+
