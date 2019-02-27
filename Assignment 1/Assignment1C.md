@@ -30,4 +30,10 @@
 ![ALT-IMG](https://cdn-images-1.medium.com/max/1200/1*ZafDv3VUm60Eh10OeJu1vw.png)
 ---
 # 5. Receptive Field
+- Receptive field of a CNN is the region in the input that the filter is taking into consideration at that instant. A receptive field of a feature can be described by its epicentre (central location) and its size. 
+- It must be noted that all pixels do not necessarily have useful information to learn corresponding to a feature extractor. Within a receptive field, the closer a pixel is to the center of the field, the more it contributes to the calculation of the output feature. 
+![ALT-IMG](https://cdn-images-1.medium.com/max/720/1*B56Ibp2x4BXSwhLkcbq1SA.png)
+- One way to overcome this is to use a larger stride or pad the input image with zeros so that all pixels are approximately considered equally. The following formula is used to calculate the effective dimensions of the output after a convolution operation (with a filter is applied on) the input image
+![ALT-IMG](https://cdn-images-1.medium.com/max/720/1*3V6TJG1U0uEPp8VUxjORpQ.png)
+
 ---
