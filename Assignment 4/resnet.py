@@ -12,29 +12,24 @@ from keras import backend as K
 
 class ResNet:
 	@staticmethod
-	def bottleneck_residual_model(data, kernels, strides, chanDim, reduced=False, reg=0.0001, epsilon=2e-5, mom=0.9):
-		# chanDim specifies the axis to apply batch-norm on
+	def residual_model(data, kernels, strides, chanDim, reduced=False, reg=0.0001, epsilon=2e-5, mom=0.9):
 		shortcut = data
-		
+
 		bn1 = BatchNormalization(axis=chanDim, epsilon=epsilon, momentum=mom)(data)
 		act1 = Activation("relu")(bn1)
-		conv1 = Conv2D(int(kernels * 0.25), (1,1), use_bias=False, kernel_regularizer=l2(reg))(act1)
+		conv1 = SeparableConv2D(kernels, (3,3), padding='same', strides=strides, use_bias=False, depthwise_regularizer=l2(reg))(act1)
 
 		bn2 = BatchNormalization(axis=chanDim, epsilon=epsilon, momentum=mom)(conv1)
 		act2 = Activation("relu")(bn2)
-		conv2 = SeparableConv2D(int(kernels * 0.25), (3,3), padding='same', strides=strides, use_bias=False, depthwise_regularizer=l2(reg))(act2)
-
-		bn3 = BatchNormalization(axis=chanDim, epsilon=epsilon, momentum=mom)(conv2)
-		act3 = Activation("relu")(bn3)
-		conv3 = Conv2D(kernels, (1,1), use_bias=False, kernel_regularizer=l2(reg))(act3)
+		conv2 = SeparableConv2D(kernels, (3,3), padding='same', strides=strides, use_bias=False, depthwise_regularizer=l2(reg))(act2)
 
 		input_shape = K.int_shape(data)
-		residual_shape = K.int_shape(conv3)
+		residual_shape = K.int_shape(conv2)
 		stride_width = int(round(input_shape[1] / residual_shape[1]))
 		stride_height = int(round(input_shape[2] / residual_shape[2]))
 		equal_channels = input_shape[3] == residual_shape[3]
 
-		shortcut = act1
+		shortcut = act0
 		# 1 X 1 conv if shape is different. Else identity.
 		if stride_width > 1 or stride_height > 1 or not equal_channels:
 			shortcut = Conv2D(filters=residual_shape[3],
@@ -42,9 +37,9 @@ class ResNet:
                       strides=(stride_width, stride_height),
                       padding="valid",
                       kernel_initializer="he_normal",
-                      kernel_regularizer=l2(0.0001))(act1)
+                      kernel_regularizer=l2(0.0001))(act0)
 
-		x = add([shortcut, conv3])
+		x = add([conv2, shortcut])
 
 		return x
 
