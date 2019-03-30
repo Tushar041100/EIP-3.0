@@ -1,3 +1,5 @@
+# Build the model
+
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, SeparableConv2D
 from keras.layers.convolutional import AveragePooling2D, MaxPooling2D, ZeroPadding2D
@@ -12,7 +14,7 @@ from keras import backend as K
 
 class ResNet:
 	@staticmethod
-	def residual_module(data, K, stride, chanDim, red=False, reg=0.0001, bnEps=2e-5, bnMom=0.9):
+	def residual_module(data, K, stride, chanDim, red=False, reg=0.0001, bnEps=2e-5, bnMom=0.9, bit=0):
 		shortcut = data
 
 		bn1 = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom)(data)
@@ -27,9 +29,10 @@ class ResNet:
 		act3 = Activation("relu")(bn3)
 		conv3 = Conv2D(K, (1, 1), use_bias=False, kernel_regularizer=l2(reg))(act3)
 
-		if red:
-			shortcut = Conv2D(K, (1, 1), strides=stride, use_bias=False, kernel_regularizer=l2(reg))(act1)
+		if red and stride == (2,2):
+			shortcut = MaxPooling2D((2,2))(bn1)
 
+		shortcut = Conv2D(K, (1,1))(shortcut)
 		x = add([conv3, shortcut])
 
 		return x
@@ -41,7 +44,7 @@ class ResNet:
 
 		inputs = Input(shape=inputShape)
 		x = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom)(inputs)
-
+		x = Activation("relu")(x)
 		x = Conv2D(filters[0], (5, 5), use_bias=False, padding="same", kernel_regularizer=l2(reg))(x)
 		x = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom)(x)
 		x = Activation("relu")(x)
