@@ -19,4 +19,4 @@ Inkers External Internship Programme 3.0 by Nvidia and Nasscom
 [Assignment 4](https://colab.research.google.com/drive/1k6Azry5WeA6dAreNF8ES4E59VwsxoX3O)
 <br>
 #### Phase 1 Performance
-![ALT-IMG]()
+![ALT-IMG](https://github.com/Vishal-V/EIP-3.0/blob/master/Content:%20Session%204/performance.png)
