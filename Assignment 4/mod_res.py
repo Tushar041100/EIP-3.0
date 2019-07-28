@@ -47,6 +47,7 @@ class ResNet:
 		x = Activation("relu")(x)
 		x = SeparableConv2D(64, (3, 3), use_bias=False, padding="same", depthwise_regularizer=l2(reg), depthwise_initializer='glorot_uniform')(x)
 		x = SeparableConv2D(128, (3, 3), use_bias=False, padding="same", depthwise_regularizer=l2(reg), depthwise_initializer='glorot_uniform')(x)
+		x = SeparableConv2D(256, (3, 3), use_bias=False, padding="same", depthwise_regularizer=l2(reg), depthwise_initializer='glorot_uniform')(x)
 		x = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom, beta_initializer="zeros", gamma_initializer="ones")(x)
 		x = Activation("relu")(x)
 		x = ZeroPadding2D((1, 1))(x)
